@@ -22,7 +22,7 @@ async function send(type,message){
     var res = "";
     var request = require('request');
     var options = {
-      uri: url.type,
+      uri: url[type],
       headers: {
         "Content-type": "application/x-www-form-urlencoded",
       },
