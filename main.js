@@ -17,4 +17,32 @@ client.on('message', message =>
     }
 });
 
+async function send(type,message){
+    var flag = false;
+    var res = "";
+    var request = require('request');
+    var options = {
+      uri: url.type,
+      headers: {
+        "Content-type": "application/x-www-form-urlencoded",
+      },
+      form: {
+        type: type
+      }
+    };
+    request.post(options, function(error, response, body){
+        flag = true;
+	res = response;
+    });
+     var check = function(callback){
+	if(flag){
+	    clearInterval(timer);
+	    callback();
+        }
+     };
+
+     var timer = setInterval(check(function ({return res})), 100);
+     
+
+}
 client.login(process.env.token);
