@@ -40,9 +40,6 @@ async function send(type,message){
 	    callback();
         }
      };
-
      var timer = setInterval(check(function ({return res})), 100);
-     
-
 }
 client.login(process.env.token);
