@@ -8,10 +8,10 @@ client.on('ready', message =>
 
 client.on('message', message =>
 {
-	if(message.author == client.user) return;
-	if(!message.content.startsWith(".")) return;
-	var args = message.content.split(" ");
-	if (args[0] === '.g') {
+    if(message.author == client.user) return;
+    if(!message.content.startsWith(".")) return;
+    var args = message.content.split(" ");
+    if (args[0] === '.g') {
         message.reply('所持金を入力してください。');
     }
 });
