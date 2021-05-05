@@ -1,6 +1,7 @@
 const discord = require('discord.js');
 const client = new discord.Client();
 const url = require('./url.json');
+const request = require('request');
 
 client.on('ready', message =>
 {
@@ -14,13 +15,13 @@ client.on('message', message =>
     var args = message.content.split(" ");
     if (args[0] === '.g') {
         message.reply('所持金を入力してください。');
+	
     }
 });
 
 async function send(type,message){
     var flag = false;
     var res = "";
-    var request = require('request');
     var options = {
       uri: url[type],
       headers: {
