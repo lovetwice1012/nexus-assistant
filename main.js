@@ -14,8 +14,14 @@ client.on('message', message =>
     if(!message.content.startsWith(".")) return;
     var args = message.content.split(" ");
     if (args[0] === '.g') {
-        message.reply('所持金を入力してください。');
-	
+	var options = {
+    		url: 'http://passionalldb.s1008.xrea.com/casino/check.php?id=' + message.author.id,
+    		method: 'GET'
+	}
+
+	request(options, function (error, response, body) {
+    		message.reply(body);
+	})
     }
 });
 
