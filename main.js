@@ -2,6 +2,35 @@ const discord = require('discord.js');
 const client = new discord.Client();
 const url = require('./url.json');
 const request = require('request');
+const { APIMessage, Structures } = require("discord.js");
+
+class ExtAPIMessage extends APIMessage {
+    resolveData() {
+        if (this.data) return this;
+        super.resolveData();
+        if ((this.options.allowedMentions || {}).repliedUser !== undefined) {
+            if (this.data.allowed_mentions === undefined) this.data.allowed_mentions = {};
+            Object.assign(this.data.allowed_mentions, { replied_user: this.options.allowedMentions.repliedUser });
+            delete this.options.allowedMentions.repliedUser;
+        }
+        if (this.options.replyTo !== undefined) {
+            Object.assign(this.data, { message_reference: { message_id: this.options.replyTo.id } });
+        }
+        return this;
+    }
+}
+
+class Message extends Structures.get("Message") {
+    inlineReply(content, options) {
+        return this.channel.send(ExtAPIMessage.create(this, content, options, { replyTo: this }).resolveData());
+    }
+
+    edit(content, options) {
+        return super.edit(ExtAPIMessage.create(this, content, options).resolveData());
+    }
+}
+
+Structures.extend("Message", () => Message);
 
 client.on('ready', message =>
 {
@@ -18,37 +47,37 @@ client.on('message', async message =>
 	    if(result === "no user"){
 		send("register",message.author.id.toString()).then(function(regresult) {
 	            if(regresult !== "success") {
-			    message.reply("API Error."); 
+			    message.inlineReply("API Error."); 
 			    return;
 		    }
-		    message.reply("Your account has been created! credit:10000");
+		    message.inlineReply("Your account has been created! credit:10000");
 		});
 		return;
 	    }
-            message.reply(result); 
+            message.inlineReply(result); 
         });
     }
     if (args[0] === '.bet') {
 	    if(args[1] === undefined || args[1] === null || args[1] === "" || args[2] === undefined || args[2] === null || args[2] === ""){
-		message.reply(".bet amount percentage");
+		message.inlineReply(".bet amount percentage");
 	        return;
 	    }
             if(parseInt(args[1]) < 1 || parseInt(args[2]) < 1 || parseInt(args[2]) > 100){
-		message.reply(".bet amount(1~∞) percentage(1~100)");
+		message.inlineReply(".bet amount(1~∞) percentage(1~100)");
 	        return;
 	    }
     	send("check",message.author.id.toString()).then(function(result) {
 	    if(result === "no user"){
-		message.reply("please send '.g' first.");
+		message.inlineReply("please send '.g' first.");
 		return;
 	    }
 	    if(parseInt(args[1]) > parseInt(result)){
-		message.reply("Your balance is too low to make this bet.");
+		message.inlineReply("Your balance is too low to make this bet.");
 		return;
 	    }
 	    send("changepoint",message.author.id.toString(),(-1 * args[1])).then(function(result) {
                         if(result === "faild") {
-	                    message.reply("API Error.");
+	                    message.inlineReply("API Error.");
 		            return;
                         }
             });
@@ -58,39 +87,39 @@ client.on('message', async message =>
 		    var get = Math.floor(parseInt(args[1]) * odd) + parseInt(args[1]);
 		    send("changepoint",message.author.id.toString(),get).then(function(result) {
                         if(result === "faild") {
-	                    message.reply("API Error.");
+	                    message.inlineReply("API Error.");
 		            return;
                         }
-                        message.reply("Hit! You won "+(get - parseInt(args[1]))+" credits! (odds:"+odd+")"); 
+                        message.inlineReply("Hit! You won "+(get - parseInt(args[1]))+" credits! (odds:"+odd+")"); 
                     });
 		    return;
 	    }else{
-		    message.reply("You lose! You lost "+args[1]+" credits! (odds:"+odd+")");
+		    message.inlineReply("You lose! You lost "+args[1]+" credits! (odds:"+odd+")");
 		    return;
 	    }
         });
     }
 	if (args[0] === '.flip') {
 	    if(args[1] === undefined || args[1] === null || args[1] === "" || args[2] === undefined || args[2] === null || args[2] === ""){
-		message.reply(".flip amount < F / B > ");
+		message.inlineReply(".flip amount < F / B > ");
 	        return;
 	    }
             if(parseInt(args[1]) < 1 || (args[2] !== "F" && args[2] !== "B")){
-		message.reply(".flip amount(1~∞) < F / B > ");
+		message.inlineReply(".flip amount(1~∞) < F / B > ");
 	        return;
 	    }
     	send("check",message.author.id.toString()).then(function(result) {
 	    if(result === "no user"){
-		message.reply("please send '.g' first.");
+		message.inlineReply("please send '.g' first.");
 		return;
 	    }
 	    if(parseInt(args[1]) > parseInt(result)){
-		message.reply("Your balance is too low to make this bet.");
+		message.inlineReply("Your balance is too low to make this bet.");
 		return;
 	    }
 	    send("changepoint",message.author.id.toString(),(-1 * args[1])).then(function(result) {
                         if(result === "faild") {
-	                    message.reply("API Error.");
+	                    message.inlineReply("API Error.");
 		            return;
                         }
             });
@@ -99,21 +128,21 @@ client.on('message', async message =>
 		    var get = Math.floor(parseInt(args[1]) * odd);
 		    send("changepoint",message.author.id.toString(),get).then(function(result) {
                         if(result === "faild") {
-	                    message.reply("API Error.");
+	                    message.inlineReply("API Error.");
 		            return;
                         }
 			if(args[2] === "F"){
-                                message.reply("Front! You won "+(get - parseInt(args[1]))+" credits!"); 
+                                message.inlineReply("Front! You won "+(get - parseInt(args[1]))+" credits!"); 
 			}else{
-				message.reply("Back! You won "+(get - parseInt(args[1]))+" credits!"); 
+				message.inlineReply("Back! You won "+(get - parseInt(args[1]))+" credits!"); 
 			}
                     });
 		    return;
 	    }else{
 		        if(args[2] === "F"){
-                                message.reply("Back! You lost "+parseInt(args[1])+" credits!"); 
+                                message.inlineReply("Back! You lost "+parseInt(args[1])+" credits!"); 
 			}else{
-				message.reply("Front! You lost "+parseInt(args[1])+" credits!"); 
+				message.inlineReply("Front! You lost "+parseInt(args[1])+" credits!"); 
 			}
 		    return;
 	    }
@@ -121,15 +150,15 @@ client.on('message', async message =>
     }
     if (args[0] === '.ban' && (message.author.id == 769340481100185631 || message.author.id == 665129572857020416 || message.author.id == 572915483209105408)) {
 	if(args[1] === undefined || args[1] === null || args[1] === ""){
-		message.reply(".ban <user id here>");
+		message.inlineReply(".ban <user id here>");
 	        return;
 	}
     	send("ban",args[1]).then(function(result) {
             if(result === "faild") {
-	        message.reply("API Error.");
+	        message.inlineReply("API Error.");
 		return;
             }
-            message.reply(result); 
+            message.inlineReply(result); 
         });
     }
 });
