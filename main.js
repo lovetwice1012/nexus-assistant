@@ -30,7 +30,8 @@ async function send(type,id,bet = 0){
         "Content-type": "application/x-www-form-urlencoded",
       },
       form: {
-       	id : id
+       	id : id,
+	point : bet
       }
     };
     options.form[type] = type;
