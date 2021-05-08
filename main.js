@@ -83,9 +83,8 @@ client.on('message', async message =>
 	                    message.inlineReply("API Error.");
 		            return;
                         }
-            });
-	    var odd = 100 / parseInt(args[2]);
-	    if(isHit(args[2])){
+		    var odd = 100 / parseInt(args[2]);
+	            if(isHit(args[2])){
 		    
 		    var get = Math.floor(parseInt(args[1]) * odd);
 		    send("changepoint",message.author.id.toString(),get).then(function(result) {
@@ -96,11 +95,13 @@ client.on('message', async message =>
                         message.inlineReply("Hit! You won "+(get - parseInt(args[1]))+" credits! (odds:"+odd+")"); 
                     });
 		    return;
-	    }else{
+	            }else{
 		    message.inlineReply("You lose! You lost "+args[1]+" credits! (odds:"+odd+")");
 		    return;
-	    }
-        });
+	            }
+                });
+            });
+	    
     }
 	if (args[0] === '.flip') {
 	    if(args[1] === undefined || args[1] === null || args[1] === "" || args[2] === undefined || args[2] === null || args[2] === ""){
@@ -125,9 +126,8 @@ client.on('message', async message =>
 	                    message.inlineReply("API Error.");
 		            return;
                         }
-            });
-	    var odd = 2;
-	    if(isHit(50)){	    
+		    var odd = 2;
+	            if(isHit(50)){	    
 		    var get = Math.floor(parseInt(args[1]) * odd);
 		    send("changepoint",message.author.id.toString(),get).then(function(result) {
                         if(result === "faild") {
@@ -141,15 +141,17 @@ client.on('message', async message =>
 			}
                     });
 		    return;
-	    }else{
+	            }else{
 		        if(args[2] === "F"){
                                 message.inlineReply("Back! You lost "+parseInt(args[1])+" credits!"); 
 			}else{
 				message.inlineReply("Front! You lost "+parseInt(args[1])+" credits!"); 
 			}
 		    return;
-	    }
-        });
+	            }
+                });
+            });
+	    
     }
     if (args[0] === '.ban' && (message.author.id == 769340481100185631 || message.author.id == 665129572857020416 || message.author.id == 572915483209105408)) {
 	if(args[1] === undefined || args[1] === null || args[1] === ""){
