@@ -27,8 +27,8 @@ async function send(type,id,bet = 0){
         "Content-type": "application/x-www-form-urlencoded",
       },
       form: {
-        type: type,
-	id: id
+        type : type,
+	"id" : id
       }
     };
     request.post(options, function(error, response, body){
