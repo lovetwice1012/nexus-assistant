@@ -15,7 +15,16 @@ client.on('message', async message =>
     var args = message.content.split(" ");
     if (args[0] === '.g') {
     	send("check",message.author.id.toString()).then(function(result) {
-	    console.log(result);
+	    if(result === "no user"){
+		send("register",message.author.id.toString()).then(function(regresult) {
+	            if(regresult !== "success") {
+			    message.reply("API Error."); 
+			    return;
+		    }
+		    message.reply("Your account has been created! credit:10000");
+		});
+		return;
+	    }
             message.reply(result); 
         });
     }
