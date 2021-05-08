@@ -94,9 +94,9 @@ client.on('message', async message =>
 		            return;
                         }
             });
-	    var odd = 2.1;
+	    var odd = 2;
 	    if(isHit(50)){	    
-		    var get = Math.floor(parseInt(args[1]) * odd) + parseInt(args[1]);
+		    var get = Math.floor(parseInt(args[1]) * odd);
 		    send("changepoint",message.author.id.toString(),get).then(function(result) {
                         if(result === "faild") {
 	                    message.reply("API Error.");
