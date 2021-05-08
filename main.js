@@ -14,14 +14,7 @@ client.on('message', message =>
     if(!message.content.startsWith(".")) return;
     var args = message.content.split(" ");
     if (args[0] === '.g') {
-	var options = {
-    		url: 'http://passionalldb.s1008.xrea.com/casino/check.php?id=' + message.author.id,
-    		method: 'GET'
-	}
-
-	request(options, function (error, response, body) {
-    		message.reply(body);
-	})
+    	message.reply(await send("check",message.author.id));
     }
 });
 
@@ -34,7 +27,8 @@ async function send(type,id,bet = 0){
         "Content-type": "application/x-www-form-urlencoded",
       },
       form: {
-        type: type
+        type: type,
+	id: id
       }
     };
     request.post(options, function(error, response, body){
