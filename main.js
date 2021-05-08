@@ -14,11 +14,14 @@ client.on('message', async message =>
     if(!message.content.startsWith(".")) return;
     var args = message.content.split(" ");
     if (args[0] === '.g') {
-    	message.reply(await send("check",message.author.id));
+    	send("check",message.author.id.toString()).then(function(result) {
+            message.reply(result); 
+        });
     }
 });
-
+     
 async function send(type,id,bet = 0){
+    var promise = new Promise(function(resolve, reject) {
     var flag = false;
     var res = "";
     var options = {
@@ -27,20 +30,16 @@ async function send(type,id,bet = 0){
         "Content-type": "application/x-www-form-urlencoded",
       },
       form: {
-        type : type,
-	"id" : id
+       	id : id
       }
     };
+    options.form[type] = type;
     request.post(options, function(error, response, body){
         flag = true;
-	res = response;
+	resolve(body);
     });
-     function check(callback){
-	if(flag){
-	    clearInterval(timer);
-	    callback();
-        }
-     };
-     var timer = setInterval(check(function ({return res})), 100);
+  });
+   return promise;
 }
+
 client.login(process.env.token);
