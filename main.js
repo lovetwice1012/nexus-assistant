@@ -42,7 +42,7 @@ client.on('message', async message =>
 		message.reply("please send '.g' first.");
 		return;
 	    }
-	    if(parseInt(args[1]) > result){
+	    if(parseInt(args[1]) > parseInt(result)){
 		message.reply("Your balance is too low to make this bet.");
 		return;
 	    }
