@@ -43,4 +43,4 @@ async function send(type,id,bet = 0){
    return promise;
 }
 
-client.login(process.env.token);
+client.login(process.env.casino-token);
