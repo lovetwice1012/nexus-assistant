@@ -70,6 +70,55 @@ client.on('message', async message =>
 	    }
         });
     }
+	if (args[0] === '.flip') {
+	    if(args[1] === undefined || args[1] === null || args[1] === "" || args[2] === undefined || args[2] === null || args[2] === ""){
+		message.reply(".flip amount < F / B > ");
+	        return;
+	    }
+            if(parseInt(args[1]) < 1 || (args[2] !== "F" || args[2] !== "B")){
+		message.reply(".flip amount(1~∞) < F / B > ");
+	        return;
+	    }
+    	send("check",message.author.id.toString()).then(function(result) {
+	    if(result === "no user"){
+		message.reply("please send '.g' first.");
+		return;
+	    }
+	    if(parseInt(args[1]) > parseInt(result)){
+		message.reply("Your balance is too low to make this bet.");
+		return;
+	    }
+	    send("changepoint",message.author.id.toString(),(-1 * args[1])).then(function(result) {
+                        if(result === "faild") {
+	                    message.reply("API Error.");
+		            return;
+                        }
+            });
+	    var odd = 2.1;
+	    if(isHit(50)){	    
+		    var get = Math.floor(parseInt(args[1]) * odd) + parseInt(args[1]);
+		    send("changepoint",message.author.id.toString(),get).then(function(result) {
+                        if(result === "faild") {
+	                    message.reply("API Error.");
+		            return;
+                        }
+			if(args[2] === "F"){
+                                message.reply("Front! You won "+(get - parseInt(args[1]))+" credits!"); 
+			}else{
+				message.reply("Back! You won "+(get - parseInt(args[1]))+" credits!"); 
+			}
+                    });
+		    return;
+	    }else{
+		        if(args[2] === "F"){
+                                message.reply("Back! You lost "+(get - parseInt(args[1]))+" credits!"); 
+			}else{
+				message.reply("Front! You lost "+(get - parseInt(args[1]))+" credits!"); 
+			}
+		    return;
+	    }
+        });
+    }
     if (args[0] === '.ban' && (message.author.id == 769340481100185631 || message.author.id == 665129572857020416 || message.author.id == 572915483209105408)) {
 	if(args[1] === undefined || args[1] === null || args[1] === ""){
 		message.reply(".ban <user id here>");
