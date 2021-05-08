@@ -8,7 +8,7 @@ client.on('ready', message =>
 	console.log('gamble bot is ready!');
 });
 
-client.on('message', message =>
+client.on('message', async message =>
 {
     if(message.author == client.user) return;
     if(!message.content.startsWith(".")) return;
