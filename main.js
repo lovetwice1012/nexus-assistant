@@ -42,6 +42,9 @@ client.on('message', async message =>
     if(message.author == client.user) return;
     if(!message.content.startsWith(".")) return;
     var args = message.content.split(" ");
+	if (args[0] === '.help') {
+		message.inlineReply(".bet: A bet whose multiplier changes according to the winning probability. (Usage: .bet amount percentage) \n.flip: You can predict the front (F) and back (B) of the coin when you toss the coin, and if the prediction is successful, you can get double the stake. If you fail, your stake will be lost. (Usage: .flip amount F / B)");
+	}
     if (args[0] === '.g') {
     	send("check",message.author.id.toString()).then(function(result) {
 	    if(result === "no user"){
