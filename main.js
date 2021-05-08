@@ -85,7 +85,7 @@ client.on('message', async message =>
 });
 function isHit(percentage){
 	var random = Math.ceil( Math.random()*100 );
-	if(random =< percentage) return true;
+	if(random <= percentage) return true;
 	return false;
 }
 async function send(type,id,bet = 0){
