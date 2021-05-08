@@ -111,9 +111,9 @@ client.on('message', async message =>
 		    return;
 	    }else{
 		        if(args[2] === "F"){
-                                message.reply("Back! You lost "+(get - parseInt(args[1]))+" credits!"); 
+                                message.reply("Back! You lost "+parseInt(args[1])+" credits!"); 
 			}else{
-				message.reply("Front! You lost "+(get - parseInt(args[1]))+" credits!"); 
+				message.reply("Front! You lost "+parseInt(args[1])+" credits!"); 
 			}
 		    return;
 	    }
