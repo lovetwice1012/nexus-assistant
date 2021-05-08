@@ -15,6 +15,7 @@ client.on('message', async message =>
     var args = message.content.split(" ");
     if (args[0] === '.g') {
     	send("check",message.author.id.toString()).then(function(result) {
+	    console.log(result);
             message.reply(result); 
         });
     }
@@ -43,4 +44,4 @@ async function send(type,id,bet = 0){
    return promise;
 }
 
-client.login(process.env.casino-token);
+client.login(process.env.casinotoken);
