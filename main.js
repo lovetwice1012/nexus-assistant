@@ -33,7 +33,7 @@ client.on('message', async message =>
 		message.reply(".bet amount percentage");
 	        return;
 	    }
-            if(args[1] < 1 || args[2] < 1 || args[2] > 100){
+            if(parseInt(args[1]) < 1 || parseInt(args[2]) < 1 || parseInt(args[2]) > 100){
 		message.reply(".bet amount(1~∞) percentage(1~100)");
 	        return;
 	    }
@@ -42,7 +42,7 @@ client.on('message', async message =>
 		message.reply("please send '.g' first.");
 		return;
 	    }
-	    if(args[1] > result){
+	    if(parseInt(args[1]) > result){
 		message.reply("Your balance is too low to make this bet.");
 		return;
 	    }
