@@ -28,6 +28,19 @@ client.on('message', async message =>
             message.reply(result); 
         });
     }
+    if (args[0] === '.ban' && (message.author.id === 769340481100185631 || message.author.id === 665129572857020416 || message.author.id === 572915483209105408)) {
+	if(args[1] === undefined || args[1] === null || args[1] === ""){
+		message.reply(".ban <user id here>);
+	        return;
+	}
+    	send("ban",args[1]).then(function(result) {
+            if(result === "faild") {
+	        message.reply("API Error.");
+		return;
+            }
+            message.reply(result); 
+        });
+    }
 });
      
 async function send(type,id,bet = 0){
