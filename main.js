@@ -28,6 +28,47 @@ client.on('message', async message =>
             message.reply(result); 
         });
     }
+    if (args[0] === '.bet') {
+	    if(args[1] === undefined || args[1] === null || args[1] === "" || args[2] === undefined || args[2] === null || args[2] === ""){
+		message.reply(".bet amount percentage");
+	        return;
+	    }
+            if(args[1] < 1 || args[2] < 1 || args[2] > 100){
+		message.reply(".bet amount(1~∞) percentage(1~100)");
+	        return;
+	    }
+    	send("check",message.author.id.toString()).then(function(result) {
+	    if(result === "no user"){
+		message.reply("please send '.g' first.");
+		return;
+	    }
+	    if(args[1] > result){
+		message.reply("Your balance is too low to make this bet.");
+		return;
+	    }
+	    send("changepoint",message.author.id.toString(),(-1 * args[1])).then(function(result) {
+                        if(result === "faild") {
+	                    message.reply("API Error.");
+		            return;
+                        }
+            });
+	    if(isHit(args[2])){
+		    var odd = 100 / args[2];
+		    var get = Math.floor(args[1] * odd);
+		    send("changepoint",message.author.id.toString(),get).then(function(result) {
+                        if(result === "faild") {
+	                    message.reply("API Error.");
+		            return;
+                        }
+                        message.reply("Hit! You won "+get+" credits! (odds:"+odd+")"); 
+                    });
+		    return;
+	    }else{
+		    message.reply("You lose! You lost "+args[1]+" credits! (odds:"+odd+")");
+		    return;
+	    }
+        });
+    }
     if (args[0] === '.ban' && (message.author.id == 769340481100185631 || message.author.id == 665129572857020416 || message.author.id == 572915483209105408)) {
 	if(args[1] === undefined || args[1] === null || args[1] === ""){
 		message.reply(".ban <user id here>");
@@ -42,7 +83,11 @@ client.on('message', async message =>
         });
     }
 });
-     
+function isHit(percentage){
+	var random = Math.ceil( Math.random()*100 );
+	if(random =< percentage) return true;
+	return false;
+}
 async function send(type,id,bet = 0){
     var promise = new Promise(function(resolve, reject) {
     var flag = false;
