@@ -25,7 +25,7 @@ client.on('message', message =>
     }
 });
 
-async function send(type,message){
+async function send(type,id,bet = 0){
     var flag = false;
     var res = "";
     var options = {
@@ -41,7 +41,7 @@ async function send(type,message){
         flag = true;
 	res = response;
     });
-     var check = function(callback){
+     function check(callback){
 	if(flag){
 	    clearInterval(timer);
 	    callback();
