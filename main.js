@@ -108,7 +108,7 @@ client.on('message', async message =>
 		message.inlineReply(".flip amount < F / B > ");
 	        return;
 	    }
-            if(parseInt(args[1]) < 1 || (args[2] !== "F" && args[2] !== "B")){
+            if(parseInt(args[1]) < 1 || (args[2] !== "F" || "f"&& args[2] !== "B" || "b")){
 		message.inlineReply(".flip amount(1~∞) < F / B > ");
 	        return;
 	    }
