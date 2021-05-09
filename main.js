@@ -108,7 +108,7 @@ client.on('message', async message =>
 		message.inlineReply(".flip amount < F / B > ");
 	        return;
 	    }
-            if(parseInt(args[1]) < 1 || (args[2] !== "F" || "f"&& args[2] !== "B" || "b")){
+            if(parseInt(args[1]) < 1 || (args[2] !== "F" && args[2] !== "f" && args[2] !== "B" && args[2] !== "b")){
 		message.inlineReply(".flip amount(1~∞) < F / B > ");
 	        return;
 	    }
@@ -150,6 +150,46 @@ client.on('message', async message =>
 		    return;
 	            }
                 });
+            });
+	    
+    }
+	if (args[0] === '.give') {
+	    if(args[1] === undefined || args[1] === null || args[1] === "" || args[2] === undefined || args[2] === null || args[2] === ""){
+		message.inlineReply(".give amount id");
+	        return;
+	    }
+            if(parseInt(args[1]) < 1){
+		message.inlineReply(".give amount(1~∞) id");
+	        return;
+	    }
+    	send("check",message.author.id.toString()).then(function(result) {
+	    if(result === "no user"){
+		message.inlineReply("please send '.g' first.");
+		return;
+	    }
+	    if(parseInt(args[1]) > parseInt(result)){
+		message.inlineReply("Your balance is too low.");
+		return;
+	    }
+	    send("check",args[2]).then(function(result) {
+	        if(result === "no user"){
+		    message.inlineReply("The account of the user to whom the credit is sent does not exist.");
+	     	    return;
+	        }
+	    send("changepoint",message.author.id.toString(),(-1 * args[1])).then(function(result) {
+                        if(result === "faild") {
+	                    message.inlineReply("API Error.");
+		            return;
+                        }
+		    send("changepoint",args[2],args[1]).then(function(result) {
+                        if(result === "faild") {
+	                    message.inlineReply("API Error.");
+		            return;
+                        }
+                        message.inlineReply("success!"); 
+                    });
+                });
+            });
             });
 	    
     }
