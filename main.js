@@ -134,7 +134,7 @@ client.on('message', async message =>
 	                    message.inlineReply("API Error.");
 		            return;
                         }
-			if(args[2] === "F"){
+			if(args[2] === "F" || args[2] === "f"){
                                 message.inlineReply("Front! You won "+(get - parseInt(args[1]))+" credits!"); 
 			}else{
 				message.inlineReply("Back! You won "+(get - parseInt(args[1]))+" credits!"); 
@@ -142,7 +142,7 @@ client.on('message', async message =>
                     });
 		    return;
 	            }else{
-		        if(args[2] === "F"){
+		        if(args[2] === "F" || args[2] === "f"){
                                 message.inlineReply("Back! You lost "+parseInt(args[1])+" credits!"); 
 			}else{
 				message.inlineReply("Front! You lost "+parseInt(args[1])+" credits!"); 
