@@ -127,7 +127,7 @@ client.on('message', async message =>
 		            return;
                         }
 		    var odd = 2.5;
-	            if(isHit(50)){	    
+	            if(isHit(75)){	    
 		    var get = Math.floor(parseInt(args[1]) * odd);
 		    send("changepoint",message.author.id.toString(),get).then(function(result) {
                         if(result === "faild") {
