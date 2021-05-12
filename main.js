@@ -126,7 +126,7 @@ client.on('message', async message =>
 	                    message.inlineReply("API Error.");
 		            return;
                         }
-		    var odd = 2;
+		    var odd = 2.5;
 	            if(isHit(50)){	    
 		    var get = Math.floor(parseInt(args[1]) * odd);
 		    send("changepoint",message.author.id.toString(),get).then(function(result) {
