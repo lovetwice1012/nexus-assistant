@@ -126,8 +126,8 @@ client.on('message', async message =>
 	                    message.inlineReply("API Error.");
 		            return;
                         }
-		    var odd = 2.5;
-	            if(isHit(75)){	    
+		    var odd = 2.25;
+	            if(isHit(50)){	    
 		    var get = Math.floor(parseInt(args[1]) * odd);
 		    send("changepoint",message.author.id.toString(),get).then(function(result) {
                         if(result === "faild") {
@@ -149,6 +149,63 @@ client.on('message', async message =>
 			}
 		    return;
 	            }
+                });
+            });
+	    
+    }
+	if (args[0] === '.slot') {
+	    if(args[1] === undefined || args[1] === null || args[1] === ""){
+		message.inlineReply(".slot amount");
+	        return;
+	    }
+            if(parseInt(args[1]) < 1 || parseInt(args[2]) < 1 || parseInt(args[2]) > 100){
+		message.inlineReply(".slot amount(1~∞)");
+	        return;
+	    }
+    	send("check",message.author.id.toString()).then(function(result) {
+	    if(result === "no user"){
+		message.inlineReply("please send '.g' first.");
+		return;
+	    }
+	    if(parseInt(args[1]) > parseInt(result)){
+		message.inlineReply("Your balance is too low.");
+		return;
+	    }
+	    send("changepoint",message.author.id.toString(),(-1 * args[1])).then(function(result) {
+                        if(result === "faild") {
+	                    message.inlineReply("API Error.");
+		            return;
+                        }
+		    
+		    var ary = ['\U00002660', '\U00002663', '\U00002665', '\U00002666', '\U0001F389', '\U0001F381', '\U0001F3AB', '\U0001F3D9', '\U0001F425', ':seven:'];
+
+                    var A = ary[Math.floor(Math.random() * ary.length)];
+                    var B = ary[Math.floor(Math.random() * ary.length)];
+                    var C = ary[Math.floor(Math.random() * ary.length)];
+
+                    var odd = 0;
+		    var bigwin = false;
+		    var win = false;
+		    
+                    if((A == B && A !== C) || (A !== B && A == C)) odd = 2;
+                    if(A == B && B == C) odd = 5;
+                    if(A == B && B == C && A == ':seven:') odd = 77;
+		    
+		    if(odd !== 0) win = true;
+		    if(win){
+		    var get = Math.floor(parseInt(args[1]) * odd);
+		    send("changepoint",message.author.id.toString(),get).then(function(result) {
+                        if(result === "faild") {
+	                    message.inlineReply("API Error.");
+		            return;
+                        }
+                        message.inlineReply("|"+A+"|"+B+"|"+C+"| You won "+(get - parseInt(args[1]))+" credits! (odds:"+odd+")"); 
+                    });
+		    return;
+		    }else{
+			message.inlineReply("|"+A+"|"+B+"|"+C+"| You lost "+(get - parseInt(args[1]))+" credits... (odds:"+odd+")");
+			return;
+		    }
                 });
             });
 	    
@@ -207,6 +264,10 @@ client.on('message', async message =>
         });
     }
 });
+
+
+
+
 function isHit(percentage){
 	var random = Math.ceil( Math.random()*100 );
 	if(random <= percentage) return true;
