@@ -187,7 +187,7 @@ client.on('message', async message =>
 		    var bigwin = false;
 		    var win = false;
 		    
-                    if((A == B && A !== C) || (A !== B && A == C)) odd = 2;
+                    if(((A == B || A == C || B == C) && (A !== C || A !== B || B !== C))) odd = 2;
                     if(A == B && B == C) odd = 5;
                     if(A == B && B == C && A == ':seven:') odd = 77;
 		    
