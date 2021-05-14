@@ -177,7 +177,7 @@ client.on('message', async message =>
 		            return;
                         }
 		    
-		    var ary = ['\U00002660', '\U00002663', '\U00002665', '\U00002666', '\U0001F389', '\U0001F381', '\U0001F3AB', '\U0001F3D9', '\U0001F425', ':seven:'];
+		    var ary = ['♠︎', '♣︎', '❤︎', '♢', '🎫', '🐥', '🌃', '🌀', '✨', ':seven:'];
 
                     var A = ary[Math.floor(Math.random() * ary.length)];
                     var B = ary[Math.floor(Math.random() * ary.length)];
@@ -199,7 +199,11 @@ client.on('message', async message =>
 	                    message.inlineReply("API Error.");
 		            return;
                         }
-                        message.inlineReply("|"+A+"|"+B+"|"+C+"| You won "+(get - parseInt(args[1]))+" credits! (odds:"+odd+")"); 
+			    if(bigwin){
+                                message.inlineReply("BIGWIN!! |"+A+"|"+B+"|"+C+"| You won "+(get - parseInt(args[1]))+" credits! (odds:"+odd+")"); 
+			    }else{
+			        message.inlineReply("|"+A+"|"+B+"|"+C+"| You won "+(get - parseInt(args[1]))+" credits! (odds:"+odd+")");
+			    }
                     });
 		    return;
 		    }else{
