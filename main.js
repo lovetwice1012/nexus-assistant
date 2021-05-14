@@ -158,7 +158,7 @@ client.on('message', async message =>
 		message.inlineReply(".slot amount");
 	        return;
 	    }
-            if(parseInt(args[1]) < 1 || parseInt(args[2]) < 1 || parseInt(args[2]) > 100){
+            if(parseInt(args[1]) < 1 || parseInt(args[2]) < 1){
 		message.inlineReply(".slot amount(1~∞)");
 	        return;
 	    }
