@@ -209,7 +209,7 @@ client.on('message', async message =>
                     });
 		    return;
 		    }else{
-			message.inlineReply("|"+A+"|"+B+"|"+C+"| You lost "+(get - parseInt(args[1]))+" credits... (odds:"+odd+")");
+			message.inlineReply("|"+A+"|"+B+"|"+C+"| You lost "+args[1]+" credits... (odds:"+odd+")");
 			return;
 		    }
                 });
