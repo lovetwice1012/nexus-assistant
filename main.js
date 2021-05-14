@@ -192,8 +192,10 @@ client.on('message', async message =>
                     if(A == B && B == C && A == ':seven:') odd = 77;
 		    
 		    if(odd !== 0) win = true;
-		    if(win){
+		    
 		    var get = Math.floor(parseInt(args[1]) * odd);
+		    
+		    if(win){
 		    send("changepoint",message.author.id.toString(),get).then(function(result) {
                         if(result === "faild") {
 	                    message.inlineReply("API Error.");
