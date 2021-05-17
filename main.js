@@ -69,4 +69,4 @@ client.on('message', async message =>
             .catch(console.error);
     }
 });
-client.login(proccess.env.nexustoken);
+client.login(process.env.nexustoken);
