@@ -50,8 +50,8 @@ client.on('message', async message =>
 	        return;
 	    }
             let roleName = args[1];
-            let role = message.guild.roles.cache.find(x => x.name === roleName);
-            if (typeof role !== undefined) {
+            let role = await message.guild.roles.cache.find(x => x.name === roleName);
+            if (role !== undefined) {
                 message.inlineReply("その名前のロールは既に存在するため作成・付与できません。");
 		return;
             } 
