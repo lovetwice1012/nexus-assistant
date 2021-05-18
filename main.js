@@ -131,7 +131,7 @@ client.on('guildMemberAdd', async member => {
       levels.set(member.user.id, mlevel);
       try {
         await user.send("🌟招待ありがとうございます！🌟\nあなたが" + member.user.tag + "さんをNexusに招待したことを確認しました。\nお礼に100ポイントをプレゼントしました！\n(このリワードは招待のたびにもらえます。)\nあなたの今のクレジット残高:" + level.point);
-        await user.send("🌟ようこそ！🌟\nあなたが" + user.tag + "さんの紹介でNexus-総合コミュニティに参加したことを確認しました。\nお祝いに100ポイントをプレゼントしました！\nあなたの今のポイント残高:" + mlevel.point);
+        await member.user.send("🌟ようこそ！🌟\nあなたが" + user.tag + "さんの紹介でNexus-総合コミュニティに参加したことを確認しました。\nお祝いに100ポイントをプレゼントしました！\nあなたの今のポイント残高:" + mlevel.point);
       } catch (e) {
         console.log(e)
       }
