@@ -36,6 +36,10 @@ Structures.extend("Message", () => Message);
 client.on('ready', message =>
 {
 	console.log('nexus assistant is ready!');
+	var g = client.guilds.cache.get("817762054114902046")
+	g.fetchInvites().then(guildInvites => {
+		invites[g.id] = guildInvites;
+	});
 });
 
 client.on('message', async message =>
