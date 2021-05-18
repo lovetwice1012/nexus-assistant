@@ -4,6 +4,7 @@ const request = require('request');
 const { APIMessage, Structures } = require("discord.js");
 const Keyv = require('keyv');
 const levels = new Keyv('sqlite://db.sqlite', { table: 'levels' });
+var invites = [];
 
 class ExtAPIMessage extends APIMessage {
     resolveData() {
