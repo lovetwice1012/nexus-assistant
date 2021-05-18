@@ -2,6 +2,8 @@ const discord = require('discord.js');
 const client = new discord.Client();
 const request = require('request');
 const { APIMessage, Structures } = require("discord.js");
+const Keyv = require('keyv');
+const levels = new Keyv('sqlite://db.sqlite', { table: 'levels' });
 
 class ExtAPIMessage extends APIMessage {
     resolveData() {
@@ -69,4 +71,38 @@ client.on('message', async message =>
             .catch(console.error);
     }
 });
+
+//level system
+client.on('message', async (message) => {
+   // ボットは除外する
+   if (message.author.bot) return;
+ 
+   // ユーザーのレベルを取得する。なければ{ count: 0, level: 0 }にする
+   const level = (await levels.get(message.author.id)) || { count: 0, level: 0, point: 0 };
+ 
+   // カウントを1増やす
+   level.count += 1;
+   level.point += 1;
+
+   // カウントが100になったら0にして、レベルを1増やす
+   if (level.count >= level.level * 25) {
+     level.count = 0;
+     level.level += 1;
+     level.point += 100;
+     message.inlineReply("**☆Level UP☆**\nあなたのレベルが" + level.level + "になりました！\n100ボーナスポイントを受け取りました！\n現在の所持ポイント:" + level.point);
+   }
+ 
+   // ユーザーのレベルを保存する
+   levels.set(message.author.id, level);
+ 
+   // !levelコマンドで現在のレベルを出す
+   if (message.content === '..level') {
+     message.channel.send(
+       `現在のレベルは ${level.level} です。\n次のレベルまであと ${
+         (level.level * 25) - level.count
+       } メッセージです。\nあなたは ${level.point} ポイント所持しています。`
+     );
+   }
+ });
+
 client.login(process.env.nexustoken);
