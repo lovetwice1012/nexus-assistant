@@ -76,6 +76,7 @@ client.on('message', async message =>
             .catch(console.error);
     }
 	if(args[0] === "..buy") {
+		return;
 	        if(args[1] === undefined || args[1] === null || args[1] === "") {
 	            message.inlineReply("使い方: ..buy reward-name");
 	            return;
