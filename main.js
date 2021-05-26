@@ -49,7 +49,7 @@ client.on('message', async message =>
     if(!message.content.startsWith("..")) return;
     var args = message.content.split(" ");
 	if (args[0] === '..help') {
-		message.inlineReply("..giverole:ネタロールを付与します。既に存在しているロールは付与できません。");
+		message.inlineReply("..giverole:ネタロールを付与します。既に存在しているロールは付与できません。\..level:色々な景品と交換できるポイントの残高を確認できます。");
 	}
         if (args[0] === '..giverole') {
 	    if(args[1] === undefined || args[1] === null || args[1] === ""){
@@ -75,6 +75,27 @@ client.on('message', async message =>
 	    })
             .catch(console.error);
     }
+	if(args[0] === "..buy") {
+	        if(args[1] === undefined || args[1] === null || args[1] === "") {
+	            message.inlineReply("使い方: ..buy reward-name");
+	            return;
+	        }
+		switch(args[1]){
+			case "nexus-BE-money-x25000":
+				
+				break;
+			case "nexus-BE-tp-bow":
+				
+				break;
+			case "nexus-BE-night-vision":
+				
+				break;
+			default:
+				message.inlineReply("..rewardコマンドで交換対象のリストを確認してください。");
+				return;
+				break;
+		}
+	}
 });
 
 //level system
