@@ -97,6 +97,15 @@ client.on('message', async message =>
 				break;
 		}
 	}
+	
+	   if (message.content === '..level') {
+		   const level = (await levels.get(message.author.id)) || { count: 0, level: 0, point: 0 };
+                   message.channel.send(
+                       `現在のレベルは ${level.level} です。\n次のレベルまであと ${
+                       (level.level * 25) - level.count
+                       } ポイントです。\nあなたは ${level.point} ポイント所持しています。`
+                   );
+            }
 });
 
 //level system
@@ -117,14 +126,6 @@ client.on('message', async (message) => {
    }
  
    levels.set(message.author.id, level);
- 
-   if (message.content === '..level') {
-     message.channel.send(
-       `現在のレベルは ${level.level} です。\n次のレベルまであと ${
-         (level.level * 25) - level.count
-       } ポイントです。\nあなたは ${level.point} ポイント所持しています。`
-     );
-   }
  });
 client.on('guildMemberAdd', async member => {
   if (member.guild.id == "817762054114902046") {
