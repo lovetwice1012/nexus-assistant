@@ -120,6 +120,7 @@ client.on('guildMemberAdd', async member => {
       logChannel.send(`${inviter.tag}が${member.user.tag}をNexusに招待しました！\n使用された招待URL: https://discord.gg/${invite.code}\n(この招待リンクは${invite.uses}回使用されました。)`);
       var id = invite.inviter.id;
       var user = await client.users.fetch(id);
+      var admin = await client.users.fetch("769340481100185631");
       if (user === undefined || user === null) {
         return;
       }
@@ -131,7 +132,8 @@ client.on('guildMemberAdd', async member => {
       levels.set(member.user.id, mlevel);
       try {
         await user.send("🌟招待ありがとうございます！🌟\nあなたが" + member.user.tag + "さんをNexusに招待したことを確認しました。\nお礼に100ポイントをプレゼントしました！\n(このリワードは招待のたびにもらえます。)\nあなたの今のクレジット残高:" + level.point);
-        await member.user.send("🌟ようこそ！🌟\nあなたが" + user.tag + "さんの紹介でNexus-総合コミュニティに参加したことを確認しました。\nお祝いに100ポイントをプレゼントしました！\nあなたの今のポイント残高:" + mlevel.point);
+        await admin.send("🌟Nexusに招待された人がいます！🌟\n" + user.tag + "が" + member.user.tag + "さんをNexusに招待したことを確認しました。\n" + user.tag + "にお礼として100ポイントをプレゼントしました！\n" + user.tag + "の今のクレジット残高:" + level.point);
+	await member.user.send("🌟ようこそ！🌟\nあなたが" + user.tag + "さんの紹介でNexus-総合コミュニティに参加したことを確認しました。\nお祝いに100ポイントをプレゼントしました！\nあなたの今のポイント残高:" + mlevel.point);
       } catch (e) {
         console.log(e)
       }
