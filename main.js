@@ -158,4 +158,52 @@ client.on('guildMemberAdd', async member => {
     });
   }
 });
+client.on("message", async message => {	
+  if (
+    message.channel.id == 821150641102651442 &&
+    message.author.id == 302050872383242240
+  ) {
+    if (message.embeds[0].description.match(/表示順をアップしたよ/)) {
+      var id = message.embeds[0].description.split(",");
+      id = id[0].replace("<@", "");
+      id = id.replace(">", "");
+      const level = (await levels.get(id)) || { count: 0, level: 0, point: 0 };
+      level.point += 75;
+      levels.set(id, level);
+      var guild = client.guilds.cache.get("817762054114902046");
+      if (guild !== undefined && guild !== null) {
+        var member = guild.members.cache.get(id);
+        if (member !== undefined && member !== null) {
+          message.inlineReply(
+            "<@"+id+"> BUMPありがとうございます！\n75ボーナスポイントを付与しました！\nあなたの所持ポイント数:"+level.point
+          );
+          var admin = message.guild.members.cache.get("769340481100185631");
+          if (admin !== undefined && admin !== null) {
+            admin.send(
+              member.user.tag +
+                "さんがBUMPしてくれました。\nお礼に75ボーナスポイントを付与しました。\n"+member.user.tag +"さんの所持ポイント数:"+level.point
+            );
+          }
+        }
+      }
+    }
+  }
+  if(message.channel.id==820292879565848616&&message.author.id==159985870458322944){
+    var id = message.content.split(":") 
+    var guild = clientassi.guilds.cache.get("817762054114902046"); 
+    if(guild!==undefined&&guild!==null){
+     var member = guild.members.cache.get(id[1])
+     if(member!==undefined&&member!==null){
+       const level = (await levels.get(member.id)) || { count: 0, level: 0, point: 0 };
+       level.point += 777;
+       levels.set(member.id, level);
+       member.send("誕生日おめでとうございます！\nお祝いに777ボーナスポイントをプレゼントします！\nあなたの所持ポイント:"+level.point) 
+       var admin = message.guild.members.cache.get("769340481100185631")
+       if(admin!==undefined&&admin!==null){
+         admin.send("今日は"+member.user.tag+"さんの誕生日です！\nお祝いに777ボーナスポイントをプレゼントしました。\n"+member.user.tag+"さんの所持ポイント数:"level.point)
+       }
+     }
+    }
+  }
+});
 client.login(process.env.nexustoken);
