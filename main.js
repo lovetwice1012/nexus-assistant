@@ -200,7 +200,7 @@ client.on("message", async message => {
        member.send("誕生日おめでとうございます！\nお祝いに777ボーナスポイントをプレゼントします！\nあなたの所持ポイント:"+level.point) 
        var admin = message.guild.members.cache.get("769340481100185631")
        if(admin!==undefined&&admin!==null){
-         admin.send("今日は"+member.user.tag+"さんの誕生日です！\nお祝いに777ボーナスポイントをプレゼントしました。\n"+member.user.tag+"さんの所持ポイント数:"level.point)
+         admin.send("今日は"+member.user.tag+"さんの誕生日です！\nお祝いに777ボーナスポイントをプレゼントしました。\n"+member.user.tag+"さんの所持ポイント数:"+level.point)
        }
      }
     }
